@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Presentation.Services;
 
-public class UserProfileService(IUserProfileRepository userProfileRepository, IUserAdressRepository userAdressRepository)
+public class UserProfileService(IUserProfileRepository userProfileRepository, IUserAdressRepository userAdressRepository) : IUserProfileService
 {
     private readonly IUserProfileRepository _userProfileRepository = userProfileRepository;
     private readonly IUserAdressRepository _userAdressRepository = userAdressRepository;
@@ -15,8 +15,8 @@ public class UserProfileService(IUserProfileRepository userProfileRepository, IU
 
     public async Task<UserResult> Create(UserProfileRequest request)
     {
-       try 
-       { 
+        try
+        {
 
             var userProfile = new UserProfileEntity
             {
@@ -41,11 +41,11 @@ public class UserProfileService(IUserProfileRepository userProfileRepository, IU
                    ? new UserResult { Succeeded = true }
                    : new UserResult { Succeeded = false, Error = result.Error };
 
-       }
+        }
 
 
-       catch (Exception ex)
-       {
+        catch (Exception ex)
+        {
             return new UserResult
             {
                 Succeeded = false,
@@ -54,7 +54,7 @@ public class UserProfileService(IUserProfileRepository userProfileRepository, IU
         }
     }
 
-    public async Task<UserResult<User?>> GetEventByIdAsync(string id)
+    public async Task<UserResult<User?>> GetUserProfileByIdAsync(string id)
     {
         var result = await _userProfileRepository.GetAsync(x => x.UserId == id);
         if (result.Succeeded && result.Result != null)
