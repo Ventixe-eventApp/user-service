@@ -103,8 +103,6 @@ public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity> where T
 
     }
 
-
-
     public virtual async Task<RepositoryResult> AlreadyExistsAsync(Expression<Func<TEntity, bool>> predicate)
     {
 
@@ -114,7 +112,6 @@ public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity> where T
            ? new RepositoryResult { Succeeded = true }
            : new RepositoryResult { Succeeded = false };
     }
-
 
 
     public virtual async Task<RepositoryResult> UpdateAsync(TEntity entity)

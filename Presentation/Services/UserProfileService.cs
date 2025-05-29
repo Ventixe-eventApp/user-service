@@ -43,7 +43,6 @@ public class UserProfileService(IUserProfileRepository userProfileRepository, IU
 
         }
 
-
         catch (Exception ex)
         {
             return new UserResult
@@ -59,7 +58,7 @@ public class UserProfileService(IUserProfileRepository userProfileRepository, IU
         var result = await _userProfileRepository.GetAsync(x => x.UserId == id);
         if (result.Succeeded && result.Result != null)
         {
-            var selectedEvent = new User
+            var selectedUser = new User
             {
                 UserId = result.Result.UserId,
                 FirstName = result.Result.FirstName,
@@ -73,7 +72,7 @@ public class UserProfileService(IUserProfileRepository userProfileRepository, IU
             return new UserResult<User?>
             {
                 Succeeded = true,
-                Result = selectedEvent
+                Result = selectedUser
             };
         }
         else

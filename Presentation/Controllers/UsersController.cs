@@ -27,13 +27,13 @@ public class UsersController(IUserProfileService userProfileService) : Controlle
     }
 
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetEventById(string id)
+    public async Task<IActionResult> GetUserById(string id)
     {
-        var selectedEvent = await _userProfileService.GetUserProfileByIdAsync(id);
-        if (selectedEvent == null)
+        var selectedUser = await _userProfileService.GetUserProfileByIdAsync(id);
+        if (selectedUser == null)
         {
             return NotFound(new { message = "User not found" });
         }
-        return Ok(selectedEvent);
+        return Ok(selectedUser);
     }
 }
