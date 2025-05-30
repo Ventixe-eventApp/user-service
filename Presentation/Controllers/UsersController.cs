@@ -14,10 +14,17 @@ public class UsersController(IUserProfileService userProfileService) : Controlle
     [HttpPost("create")]
     public async Task<IActionResult> CreateUserProfile([FromBody] UserProfileRequest request)
     {
-        if (request == null)
+        if (!ModelState.IsValid)
         {
-            return BadRequest("User profile request cannot be null.");
+            var errors = ModelState
+                .Where(x => x.Value?.Errors.Count > 0)
+                .ToDictionary(
+                    kvp => kvp.Key,
+                    kvp => kvp.Value?.Errors.Select(e => e.ErrorMessage).ToArray()
+                );
+            return BadRequest(new { sucess = false, errors });
         }
+
         var result = await _userProfileService.Create(request);
         if (result.Succeeded)
         {
